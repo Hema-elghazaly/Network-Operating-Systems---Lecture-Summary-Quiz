@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Operating Systems - Summary & Quiz</title>
+    <style>
+      :root {
+        --primary: #2c3e50;
+        --secondary: #3498db;
+        --accent: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --danger: #e74c3c;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #2dfdda);
+        color: #333;
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.8),3px 3px 5px rgba(44, 2, 2, 0.8);
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+        color: #fdbb2d;
+      }
+
+      .tagline {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+
+      .nav-tabs {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .tab {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        margin: 0 10px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .tab:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .tab.active {
+        background: white;
+        color: var(--primary);
+      }
+
+      .content-section {
+        display: none;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+      }
+
+      .content-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 30px;
+        color: white;
+      }
+
+      h2 {
+        font-size: 2rem;
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 10px;
+        margin-top: 30px;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        color: var(--secondary);
+        margin-top: 25px;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      ul,
+      ol {
+        margin-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      .summary-box {
+        background: #f8f9fa;
+        border-left: 4px solid var(--secondary);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .question {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .question:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .question-number {
+        background: var(--secondary);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .question-type {
+        background: var(--accent);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+      }
+
+      .options {
+        margin-left: 15px;
+      }
+
+      .option {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .option:hover {
+        background: #e9ecef;
+      }
+
+      .option.selected {
+        background: var(--secondary);
+        color: white;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      button {
+        background: var(--secondary);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+      }
+
+      button:disabled {
+        background: #bdc3c7;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .quiz-results {
+        text-align: center;
+        padding: 30px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        margin-top: 30px;
+        display: none;
+      }
+
+      .score {
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--secondary);
+        margin: 20px 0;
+      }
+
+      .progress-bar {
+        height: 10px;
+        background: #e9ecef;
+        border-radius: 5px;
+        margin: 20px 0;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 100%;
+        background: var(--success);
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+
+      footer {
+        text-align: center;
+        color: white;
+        margin-top: 40px;
+        padding: 20px;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-tabs {
+          flex-direction: column;
+        }
+
+        .tab {
+          margin: 5px 0;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a
+          href="https://youtube.com/@ebrahim..elghazaly?si=T03mnrIaRxtri7Iu"
+          class="logo"
+          target="_blank"
+          rel="noopener"
+          >Elghazaly Web ( قناة اليوتيوب ) </a
+        >
+        <p class="tagline">
+          Network Operating Systems - Lecture Summary & Quiz
+        </p>
+        <div class="nav-tabs">
+          <button class="tab active" data-target="summary">Summary</button>
+          <button class="tab" data-target="quiz">Quiz (50 Questions)</button>
+        </div>
+      </header>
+
+      <section id="summary" class="content-section active">
+        <h2>Network Operating Systems - Summary</h2>
+
+        <div class="summary-box">
+          <h3>Overview</h3>
+          <p>
+            This document covers lectures on Operating Systems in general and
+            Network Operating Systems in particular. It provides comprehensive
+            information about OS services, process management, memory
+            management, storage, protection, security, and different computing
+            environments.
+          </p>
+        </div>
+
+        <h3>1. Operating System Services</h3>
+        <p>
+          Operating systems provide an environment for execution of programs and
+          services to programs and users:
+        </p>
+        <ul>
+          <li>
+            <strong>User Interface</strong> - CLI, GUI, touch-screen, Batch
+          </li>
+          <li>
+            <strong>Program Execution</strong> - Loading programs into memory
+            and running them
+          </li>
+          <li>
+            <strong>I/O Operations</strong> - Management of input/output devices
+          </li>
+          <li>
+            <strong>File-System Manipulation</strong> - Reading, writing,
+            creating, deleting files
+          </li>
+          <li><strong>Communications</strong> - Inter-process communication</li>
+          <li>
+            <strong>Error Detection</strong> - Hardware, software, and user
+            program errors
+          </li>
+          <li>
+            <strong>Resource Allocation</strong> - CPU cycles, memory, file
+            storage, I/O devices
+          </li>
+          <li>
+            <strong>Protection and Security</strong> - Controlling access to
+            resources
+          </li>
+        </ul>
+
+        <h3>2. Computer System Structure</h3>
+        <p>Computer system can be divided into four components:</p>
+        <ul>
+          <li>
+            <strong>Hardware</strong> - Provides basic computing resources (CPU,
+            memory, I/O devices)
+          </li>
+          <li>
+            <strong>Operating System</strong> - Controls and coordinates use of
+            hardware
+          </li>
+          <li>
+            <strong>Application Programs</strong> - Define how system resources
+            are used
+          </li>
+          <li><strong>Users</strong> - People, machines, other computers</li>
+        </ul>
+
+        <h3>3. Process Management</h3>
+        <p>
+          A process is a program in execution. It is a unit of work within the
+          system.
+        </p>
+        <ul>
+          <li>
+            Program is a <strong>passive entity</strong>, process is an
+            <strong>active entity</strong>
+          </li>
+          <li>Process needs resources (CPU, memory, I/O, files)</li>
+          <li>
+            OS activities: creating/deleting processes, suspending/resuming,
+            synchronization, communication, deadlock handling
+          </li>
+        </ul>
+
+        <h3>4. Memory Management</h3>
+        <p>Memory management determines what is in memory and when:</p>
+        <ul>
+          <li>Optimizing CPU utilization and computer response</li>
+          <li>Keeping track of memory usage</li>
+          <li>Deciding which processes to move in/out of memory</li>
+          <li>Allocating and deallocating memory space</li>
+        </ul>
+
+        <h3>5. Storage Management</h3>
+        <p>
+          Storage systems organized in hierarchy based on speed, cost, and
+          volatility:
+        </p>
+        <ul>
+          <li><strong>Main Memory</strong> - Random access, volatile, DRAM</li>
+          <li>
+            <strong>Secondary Storage</strong> - Nonvolatile, large capacity
+            (HDD)
+          </li>
+          <li>
+            <strong>Non-volatile Memory (NVM)</strong> - Faster than HDD,
+            nonvolatile
+          </li>
+          <li>
+            <strong>Caching</strong> - Copying information into faster storage
+          </li>
+        </ul>
+
+        <h3>6. Protection and Security</h3>
+        <ul>
+          <li>
+            <strong>Protection</strong> - Mechanism for controlling access to
+            resources
+          </li>
+          <li>
+            <strong>Security</strong> - Defense against internal and external
+            attacks
+          </li>
+          <li>User identities (user IDs, security IDs)</li>
+          <li>Group identifier (group ID)</li>
+          <li>Privilege escalation</li>
+        </ul>
+
+        <h3>7. Computing Environments</h3>
+        <ul>
+          <li>
+            <strong>Traditional</strong> - Stand-alone machines, network
+            computers, mobile computers
+          </li>
+          <li>
+            <strong>Mobile</strong> - Smartphones, tablets with extra features
+            (GPS, gyroscope)
+          </li>
+          <li>
+            <strong>Client-Server</strong> - Servers responding to client
+            requests
+          </li>
+          <li>
+            <strong>Cloud Computing</strong> - Computing, storage, apps as a
+            service
+          </li>
+        </ul>
+
+        <h3>8. System Calls</h3>
+        <p>Programming interface to the services provided by the OS:</p>
+        <ul>
+          <li>Typically written in high-level language (C or C++)</li>
+          <li>Accessed via APIs (Win32 API, POSIX API, Java API)</li>
+          <li>
+            Types: Process control, File management, Device management,
+            Information maintenance, Communications, Protection
+          </li>
+        </ul>
+      </section>
+
+      <section id="quiz" class="content-section">
+        <h2>Network Operating Systems Quiz</h2>
+        <p>
+          Test your knowledge with 50 questions (35 direct + 15 indirect) based
+          on the lecture content.
+        </p>
+
+        <div id="quiz-container">
+          <!-- Questions will be dynamically inserted here -->
+        </div>
+
+        <div class="controls">
+          <button id="prev-btn" disabled>Previous</button>
+          <button id="next-btn">Next</button>
+          <button id="submit-btn" style="display: none">Submit Quiz</button>
+        </div>
+
+        <div id="quiz-results" class="quiz-results">
+          <h2>Quiz Results</h2>
+          <div class="score" id="final-score">0/50</div>
+          <div class="progress-bar">
+            <div class="progress" id="score-progress"></div>
+          </div>
+          <p id="result-message"></p>
+          <button id="restart-btn">Take Quiz Again</button>
+        </div>
+      </section>
+
+      <footer>
+        <p>
+          Network Operating Systems - Lecture Summary & Quiz | Created for
+          Ebrahim Elghazaly
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Questions data
+      const questions = [
+        // Direct Questions (1-35)
+        {
+          id: 1,
+          type: "direct",
+          text: "What are the four components of a computer system?",
+          options: [
+            "Hardware, Operating System, Application Programs, Users",
+            "CPU, Memory, I/O Devices, Storage",
+            "Kernel, System Programs, Application Programs, Users",
+            "Input, Processing, Output, Storage",
+          ],
+          correct: 0,
+        },
+        {
+          id: 2,
+          type: "direct",
+          text: "What is the main purpose of an operating system?",
+          options: [
+            "To control and coordinate use of hardware among applications and users",
+            "To provide a user interface for applications",
+            "To manage computer hardware resources",
+            "All of the above",
+          ],
+          correct: 3,
+        },
+        {
+          id: 3,
+          type: "direct",
+          text: "What is the difference between a program and a process?",
+          options: [
+            "Program is passive, process is active",
+            "Program is active, process is passive",
+            "They are the same thing",
+            "Program is in memory, process is on disk",
+          ],
+          correct: 0,
+        },
+        {
+          id: 4,
+          type: "direct",
+          text: "What is multiprogramming?",
+          options: [
+            "Running multiple programs concurrently to maximize CPU utilization",
+            "Using multiple processors in a computer system",
+            "Programming in multiple languages",
+            "Dividing a program into multiple parts",
+          ],
+          correct: 0,
+        },
+        {
+          id: 5,
+          type: "direct",
+          text: "What is the purpose of dual-mode operation in an OS?",
+          options: [
+            "To protect the OS and system components from user programs",
+            "To allow the OS to run on different hardware",
+            "To support both 32-bit and 64-bit applications",
+            "To provide both GUI and CLI interfaces",
+          ],
+          correct: 0,
+        },
+        {
+          id: 6,
+          type: "direct",
+          text: "What is an interrupt?",
+          options: [
+            "A signal that alerts the CPU to pause current execution",
+            "A type of system call",
+            "An error in program execution",
+            "A hardware failure",
+          ],
+          correct: 0,
+        },
+        {
+          id: 7,
+          type: "direct",
+          text: "What is the function of a device driver?",
+          options: [
+            "To manage a specific type of hardware device",
+            "To provide power to peripheral devices",
+            "To install new hardware",
+            "To optimize CPU performance",
+          ],
+          correct: 0,
+        },
+        {
+          id: 8,
+          type: "direct",
+          text: "What is the difference between protection and security?",
+          options: [
+            "Protection controls access, security defends against attacks",
+            "Protection is for hardware, security is for software",
+            "They are the same thing",
+            "Protection is external, security is internal",
+          ],
+          correct: 0,
+        },
+        {
+          id: 9,
+          type: "direct",
+          text: "What is virtual memory?",
+          options: [
+            "A technique that allows execution of processes not completely in memory",
+            "Memory that doesn't physically exist",
+            "A type of cache memory",
+            "Memory used for virtual machines",
+          ],
+          correct: 0,
+        },
+        {
+          id: 10,
+          type: "direct",
+          text: "What is a system call?",
+          options: [
+            "A programming interface to OS services",
+            "A function call within an application",
+            "A method to call another program",
+            "A way to communicate between processes",
+          ],
+          correct: 0,
+        },
+        {
+          id: 11,
+          type: "direct",
+          text: "What is the role of the kernel in an operating system?",
+          options: [
+            "The core program running at all times",
+            "The user interface component",
+            "The file management system",
+            "The network communication module",
+          ],
+          correct: 0,
+        },
+        {
+          id: 12,
+          type: "direct",
+          text: "What is the purpose of caching?",
+          options: [
+            "To copy information into faster storage temporarily",
+            "To clear memory space",
+            "To backup important data",
+            "To encrypt sensitive information",
+          ],
+          correct: 0,
+        },
+        {
+          id: 13,
+          type: "direct",
+          text: "What is DMA (Direct Memory Access)?",
+          options: [
+            "Device controller transfers data directly to memory without CPU",
+            "Direct modification of memory by user programs",
+            "A type of memory allocation",
+            "A method for memory protection",
+          ],
+          correct: 0,
+        },
+        {
+          id: 14,
+          type: "direct",
+          text: "What is the difference between symmetric and asymmetric multiprocessing?",
+          options: [
+            "Symmetric: each processor performs all tasks; Asymmetric: each processor has specific task",
+            "Symmetric: processors share memory; Asymmetric: processors have separate memory",
+            "Symmetric: for servers; Asymmetric: for clients",
+            "They are the same thing",
+          ],
+          correct: 0,
+        },
+        {
+          id: 15,
+          type: "direct",
+          text: "What is a trap or exception?",
+          options: [
+            "A software-generated interrupt",
+            "A hardware failure",
+            "A type of system call",
+            "A memory access error",
+          ],
+          correct: 0,
+        },
+        {
+          id: 16,
+          type: "direct",
+          text: "What is the purpose of a bootstrap program?",
+          options: [
+            "To initialize the system and load the kernel",
+            "To speed up system startup",
+            "To recover from system crashes",
+            "To install operating system updates",
+          ],
+          correct: 0,
+        },
+        {
+          id: 17,
+          type: "direct",
+          text: "What is the main advantage of multiprocessor systems?",
+          options: [
+            "Increased throughput, economy of scale, increased reliability",
+            "Lower cost, simpler design, easier maintenance",
+            "Faster single-thread performance, compatibility, power efficiency",
+            "All of the above",
+          ],
+          correct: 0,
+        },
+        {
+          id: 18,
+          type: "direct",
+          text: "What is the function of a linker?",
+          options: [
+            "Combines object files into a single executable",
+            "Translates source code to object code",
+            "Loads programs into memory for execution",
+            "Manages dynamic libraries",
+          ],
+          correct: 0,
+        },
+        {
+          id: 19,
+          type: "direct",
+          text: "What is the role of a loader?",
+          options: [
+            "Brings programs into memory for execution",
+            "Compiles source code",
+            "Links object files",
+            "Manages process scheduling",
+          ],
+          correct: 0,
+        },
+        {
+          id: 20,
+          type: "direct",
+          text: "What is middleware?",
+          options: [
+            "Software frameworks that provide additional services to application developers",
+            "The core component of an operating system",
+            "A type of system call",
+            "A user interface component",
+          ],
+          correct: 0,
+        },
+        {
+          id: 21,
+          type: "direct",
+          text: "What is the purpose of a timer in an operating system?",
+          options: [
+            "To prevent infinite loops and process hogging resources",
+            "To schedule system backups",
+            "To measure program execution time",
+            "To synchronize system clocks",
+          ],
+          correct: 0,
+        },
+        {
+          id: 22,
+          type: "direct",
+          text: "What is the main characteristic of secondary storage?",
+          options: [
+            "Nonvolatile with large storage capacity",
+            "Fast access but volatile",
+            "Small capacity but very fast",
+            "Used only for temporary data",
+          ],
+          correct: 0,
+        },
+        {
+          id: 23,
+          type: "direct",
+          text: "What is a word in computer architecture?",
+          options: [
+            "The native unit of data for a computer architecture",
+            "A group of characters in text",
+            "A unit of memory measurement",
+            "A type of instruction",
+          ],
+          correct: 0,
+        },
+        {
+          id: 24,
+          type: "direct",
+          text: "What is the purpose of the mode bit?",
+          options: [
+            "To distinguish between user mode and kernel mode",
+            "To indicate system status",
+            "To control power management",
+            "To select between different user interfaces",
+          ],
+          correct: 0,
+        },
+        {
+          id: 25,
+          type: "direct",
+          text: "What is a privileged instruction?",
+          options: [
+            "An instruction that can only be executed in kernel mode",
+            "An instruction that requires special permissions",
+            "An instruction that is rarely used",
+            "An instruction for system administrators only",
+          ],
+          correct: 0,
+        },
+        {
+          id: 26,
+          type: "direct",
+          text: "What is the main function of process management?",
+          options: [
+            "Creating, deleting, suspending, and resuming processes",
+            "Allocating memory to processes",
+            "Managing file access for processes",
+            "Controlling network connections for processes",
+          ],
+          correct: 0,
+        },
+        {
+          id: 27,
+          type: "direct",
+          text: "What is the purpose of file-system management?",
+          options: [
+            "To provide a uniform, logical view of information storage",
+            "To optimize disk performance",
+            "To encrypt sensitive files",
+            "To backup important data",
+          ],
+          correct: 0,
+        },
+        {
+          id: 28,
+          type: "direct",
+          text: "What is the storage hierarchy based on?",
+          options: [
+            "Speed, cost, and volatility",
+            "Size, manufacturer, and technology",
+            "Age, usage, and importance",
+            "All of the above",
+          ],
+          correct: 0,
+        },
+        {
+          id: 29,
+          type: "direct",
+          text: "What is the main characteristic of NVM (Non-volatile Memory)?",
+          options: [
+            "Faster than hard disks and nonvolatile",
+            "Slower than hard disks but nonvolatile",
+            "Faster than RAM but volatile",
+            "The same as cache memory",
+          ],
+          correct: 0,
+        },
+        {
+          id: 30,
+          type: "direct",
+          text: "What is the purpose of mass-storage management?",
+          options: [
+            "To manage disks and other storage media",
+            "To compress data to save space",
+            "To encrypt stored data",
+            "To organize files in directories",
+          ],
+          correct: 0,
+        },
+        {
+          id: 31,
+          type: "direct",
+          text: "What is the main advantage of cloud computing?",
+          options: [
+            "Delivering computing as a service across a network",
+            "Faster processing speeds",
+            "Better security",
+            "Lower hardware costs",
+          ],
+          correct: 0,
+        },
+        {
+          id: 32,
+          type: "direct",
+          text: "What is the difference between SaaS, PaaS, and IaaS?",
+          options: [
+            "SaaS: applications, PaaS: platform, IaaS: infrastructure",
+            "SaaS: storage, PaaS: processing, IaaS: internet",
+            "They are different names for the same thing",
+            "SaaS: security, PaaS: protection, IaaS: integration",
+          ],
+          correct: 0,
+        },
+        {
+          id: 33,
+          type: "direct",
+          text: "What is the purpose of the system-call interface?",
+          options: [
+            "To provide a bridge between applications and OS services",
+            "To manage hardware interrupts",
+            "To control user access to system resources",
+            "To optimize system performance",
+          ],
+          correct: 0,
+        },
+        {
+          id: 34,
+          type: "direct",
+          text: "What is the main purpose of dynamic linking?",
+          options: [
+            "To load libraries as needed and share them between programs",
+            "To make programs start faster",
+            "To reduce program size",
+            "To improve program security",
+          ],
+          correct: 0,
+        },
+        {
+          id: 35,
+          type: "direct",
+          text: "Why are applications operating system specific?",
+          options: [
+            "Each OS has its own system calls and file formats",
+            "Different OSes use different programming languages",
+            "Hardware compatibility issues",
+            "All of the above",
+          ],
+          correct: 0,
+        },
+        // Indirect Questions (36-50)
+        {
+          id: 36,
+          type: "indirect",
+          text: "In a multiprogramming environment, what would happen if there was no job scheduling mechanism?",
+          options: [
+            "CPU would remain idle when a job waits for I/O",
+            "Jobs would execute faster",
+            "Memory usage would be more efficient",
+            "System security would improve",
+          ],
+          correct: 0,
+        },
+        {
+          id: 37,
+          type: "indirect",
+          text: "How does the separation of policy and mechanism benefit OS design?",
+          options: [
+            "Allows flexibility to change policies without modifying mechanisms",
+            "Makes the OS run faster",
+            "Simplifies user interface design",
+            "Reduces memory requirements",
+          ],
+          correct: 0,
+        },
+        {
+          id: 38,
+          type: "indirect",
+          text: "What would be the consequence if an operating system had no protection mechanism?",
+          options: [
+            "User programs could interfere with OS operation",
+            "Programs would run faster",
+            "Memory management would be more efficient",
+            "System would be more user-friendly",
+          ],
+          correct: 0,
+        },
+        {
+          id: 39,
+          type: "indirect",
+          text: "Why is cache coherency important in multiprocessor systems?",
+          options: [
+            "To ensure all CPUs have the most recent value in their cache",
+            "To improve single-thread performance",
+            "To reduce power consumption",
+            "To simplify programming",
+          ],
+          correct: 0,
+        },
+        {
+          id: 40,
+          type: "indirect",
+          text: "How does virtual memory extend the capabilities of a system?",
+          options: [
+            "Allows running programs larger than physical memory",
+            "Increases CPU clock speed",
+            "Improves disk performance",
+            "Enhances network connectivity",
+          ],
+          correct: 0,
+        },
+        {
+          id: 41,
+          type: "indirect",
+          text: "What problem does DMA solve in computer systems?",
+          options: [
+            "Reduces CPU overhead for large data transfers",
+            "Increases memory capacity",
+            "Improves graphics performance",
+            "Enhances security",
+          ],
+          correct: 0,
+        },
+        {
+          id: 42,
+          type: "indirect",
+          text: "How does multitasking differ from multiprogramming?",
+          options: [
+            "Multitasking provides interactive computing with fast response times",
+            "Multitasking uses multiple processors",
+            "Multitasking is for servers, multiprogramming for desktops",
+            "They are the same concept",
+          ],
+          correct: 0,
+        },
+        {
+          id: 43,
+          type: "indirect",
+          text: "What is the significance of an operating system being interrupt driven?",
+          options: [
+            "Allows the OS to respond to events in a timely manner",
+            "Makes the OS more secure",
+            "Reduces power consumption",
+            "Simplifies programming",
+          ],
+          correct: 0,
+        },
+        {
+          id: 44,
+          type: "indirect",
+          text: "How does the use of APIs benefit application developers?",
+          options: [
+            "Hides complexity of direct system call use",
+            "Makes applications run faster",
+            "Reduces application size",
+            "Improves application security",
+          ],
+          correct: 0,
+        },
+        {
+          id: 45,
+          type: "indirect",
+          text: "What would happen if there was no memory management in an OS?",
+          options: [
+            "Programs could interfere with each other's memory space",
+            "Programs would run faster",
+            "System would use less power",
+            "User interface would be simpler",
+          ],
+          correct: 0,
+        },
+        {
+          id: 46,
+          type: "indirect",
+          text: "Why is the concept of a 'file' important in operating systems?",
+          options: [
+            "Provides abstraction of physical storage properties",
+            "Makes data retrieval faster",
+            "Increases storage capacity",
+            "Improves data security",
+          ],
+          correct: 0,
+        },
+        {
+          id: 47,
+          type: "indirect",
+          text: "How does multiprocessing improve system reliability?",
+          options: [
+            "Allows graceful degradation if a processor fails",
+            "Makes programs run faster",
+            "Reduces power consumption",
+            "Simplifies system administration",
+          ],
+          correct: 0,
+        },
+        {
+          id: 48,
+          type: "indirect",
+          text: "What is the advantage of dynamic linking over static linking?",
+          options: [
+            "Allows sharing of libraries between programs",
+            "Makes programs start faster",
+            "Reduces memory usage",
+            "Improves program security",
+          ],
+          correct: 0,
+        },
+        {
+          id: 49,
+          type: "indirect",
+          text: "How does cloud computing represent a logical extension of virtualization?",
+          options: [
+            "Uses virtualization as the base for its functionality",
+            "Provides better performance than virtualization",
+            "Is more secure than virtualization",
+            "Is easier to implement than virtualization",
+          ],
+          correct: 0,
+        },
+        {
+          id: 50,
+          type: "indirect",
+          text: "What problem does process synchronization solve?",
+          options: [
+            "Prevents race conditions when processes access shared data",
+            "Makes processes run faster",
+            "Reduces memory usage",
+            "Improves user interface responsiveness",
+          ],
+          correct: 0,
+        },
+      ];
+
+      // Quiz state
+      let currentQuestion = 0;
+      let userAnswers = new Array(questions.length).fill(null);
+      let quizSubmitted = false;
+
+      // DOM elements
+      const quizContainer = document.getElementById("quiz-container");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const submitBtn = document.getElementById("submit-btn");
+      const restartBtn = document.getElementById("restart-btn");
+      const quizResults = document.getElementById("quiz-results");
+      const finalScore = document.getElementById("final-score");
+      const scoreProgress = document.getElementById("score-progress");
+      const resultMessage = document.getElementById("result-message");
+      const tabs = document.querySelectorAll(".tab");
+      const contentSections = document.querySelectorAll(".content-section");
+
+      // Initialize the quiz
+      function initQuiz() {
+        displayQuestion(currentQuestion);
+        updateNavigationButtons();
+      }
+
+      // Display a question
+      function displayQuestion(index) {
+        const question = questions[index];
+
+        let optionsHTML = "";
+        question.options.forEach((option, i) => {
+          const isSelected = userAnswers[index] === i;
+          optionsHTML += `
+                    <div class="option ${
+                      isSelected ? "selected" : ""
+                    }" data-index="${i}">
+                        ${String.fromCharCode(65 + i)}. ${option}
+                    </div>
+                `;
+        });
+
+        quizContainer.innerHTML = `
+                <div class="question">
+                    <div class="question-header">
+                        <div class="question-number">${index + 1}</div>
+                        <div class="question-type">${question.type.toUpperCase()}</div>
+                    </div>
+                    <p>${question.text}</p>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+
+        // Add event listeners to options
+        document.querySelectorAll(".option").forEach((option) => {
+          option.addEventListener("click", function () {
+            if (quizSubmitted) return;
+
+            const selectedIndex = parseInt(this.getAttribute("data-index"));
+            userAnswers[index] = selectedIndex;
+
+            // Update UI
+            document.querySelectorAll(".option").forEach((opt) => {
+              opt.classList.remove("selected");
+            });
+            this.classList.add("selected");
+
+            // Enable next button if not on last question
+            if (index < questions.length - 1) {
+              nextBtn.disabled = false;
+            } else {
+              submitBtn.style.display = "inline-block";
+            }
+          });
+        });
+      }
+
+      // Update navigation buttons
+      function updateNavigationButtons() {
+        prevBtn.disabled = currentQuestion === 0;
+
+        if (currentQuestion === questions.length - 1) {
+          nextBtn.style.display = "none";
+          if (userAnswers[currentQuestion] !== null) {
+            submitBtn.style.display = "inline-block";
+          }
+        } else {
+          nextBtn.style.display = "inline-block";
+          submitBtn.style.display = "none";
+          nextBtn.disabled = userAnswers[currentQuestion] === null;
+        }
+      }
+
+      // Calculate and display results
+      function showResults() {
+        let score = 0;
+        questions.forEach((question, index) => {
+          if (userAnswers[index] === question.correct) {
+            score++;
+          }
+        });
+
+        const percentage = (score / questions.length) * 100;
+        finalScore.textContent = `${score}/${questions.length}`;
+        scoreProgress.style.width = `${percentage}%`;
+
+        let message = "";
+        if (percentage >= 90) {
+          message =
+            "Excellent! You have a strong understanding of Network Operating Systems.";
+        } else if (percentage >= 70) {
+          message = "Good job! You have a solid grasp of the material.";
+        } else if (percentage >= 50) {
+          message =
+            "Not bad! Review the summary section to improve your knowledge.";
+        } else {
+          message = "Keep studying! Review the material and try again.";
+        }
+
+        resultMessage.textContent = message;
+        quizResults.style.display = "block";
+      }
+
+      // Event listeners
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          const target = this.getAttribute("data-target");
+
+          // Update active tab
+          tabs.forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+
+          // Show target section
+          contentSections.forEach((section) => {
+            section.classList.remove("active");
+            if (section.id === target) {
+              section.classList.add("active");
+            }
+          });
+        });
+      });
+
+      prevBtn.addEventListener("click", function () {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          displayQuestion(currentQuestion);
+          updateNavigationButtons();
+        }
+      });
+
+      nextBtn.addEventListener("click", function () {
+        if (currentQuestion < questions.length - 1) {
+          currentQuestion++;
+          displayQuestion(currentQuestion);
+          updateNavigationButtons();
+        }
+      });
+
+      submitBtn.addEventListener("click", function () {
+        quizSubmitted = true;
+        showResults();
+        this.style.display = "none";
+      });
+
+      restartBtn.addEventListener("click", function () {
+        currentQuestion = 0;
+        userAnswers = new Array(questions.length).fill(null);
+        quizSubmitted = false;
+        quizResults.style.display = "none";
+        submitBtn.style.display = "none";
+        nextBtn.style.display = "inline-block";
+        initQuiz();
+      });
+
+      // Initialize the application
+      document.addEventListener("DOMContentLoaded", function () {
+        initQuiz();
+      });
+    </script>
+  </body>
+</html>
